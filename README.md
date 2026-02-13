@@ -4,6 +4,6 @@
 
 Tech Stack:
 
-- Next.js 13+
+- Next.js 16+
 - React
 - TypeScript (optional)
