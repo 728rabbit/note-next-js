@@ -1,15 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Noto_Sans, Noto_Serif, Noto_Sans_TC } from 'next/font/google';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+import "../public/css/globals.css";
+
+// Load Noto Sans (sans-serif font)
+const notoSans = Noto_Sans({
+    subsets: ['latin', 'latin-ext'],
+    weight: ['400', '500', '600', '700'],
+    variable: '--font-noto-sans',
+    display: 'swap'
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Load Noto Serif (serif font)
+const notoSerif = Noto_Serif({
+    subsets: ['latin'],
+    weight: ['400', '700'],
+    variable: '--font-noto-serif',
+    display: 'swap'
+});
+
+// Load Noto Sans TC (Traditional Chinese)
+const notoSansTC = Noto_Sans_TC({
+    subsets: ['latin'],
+    weight: ['400', '500', '700'],
+    variable: '--font-noto-sans-tc',
+    display: 'swap'
 });
 
 export const metadata: Metadata = {
@@ -23,12 +38,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html lang="en" className={`${notoSans.variable} ${notoSansTC.variable} ` }>
+        <body className="iweby">
+            <div className="iweby-viewer">
+                {children}
+            </div>
+        </body>
     </html>
   );
 }
