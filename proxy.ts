@@ -9,7 +9,7 @@ export function proxy(request: NextRequest) {
 
     console.log('Middleware 執行:', pathname);
 
-    if(pathname === '/admin/authn/login') {
+    if(pathname === '/admin/login') {
         if (token) {
             return NextResponse.redirect(new URL('/', request.url));
         }
@@ -28,7 +28,7 @@ export function proxy(request: NextRequest) {
 
     if (!token && pathname.startsWith('/admin')) {
         // 沒有 token，重定向到登入頁
-        return NextResponse.redirect(new URL('/admin/authn/login', request.url));
+        return NextResponse.redirect(new URL('/admin/login', request.url));
     }
 
     return NextResponse.next();
