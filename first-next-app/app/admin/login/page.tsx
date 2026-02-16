@@ -6,8 +6,14 @@ import Link from 'next/link';
 import '../../../public/css/admin/common.css';
 import '../../../public/css/admin/authn.css';
 import websiteLogo from '../../../public/assets/website-logo.png';
+import { redirect } from 'next/navigation';
+import { setCookie } from '@/app/Helpers/cookies';
+
+import { useAdminUser } from '../../contexts/adminuser';
 
 export default function LoginPage() {
+    const { setUser } = useAdminUser();
+
     const [formData, setFormData] = useState({
         name: '',
         password: '',
@@ -19,6 +25,7 @@ export default function LoginPage() {
         password: false
     });
 
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -75,17 +82,25 @@ export default function LoginPage() {
         setMessage({ type: '', text: '' });
 
         try {
-            if (formData.name.trim() !== 'admin' && formData.password.trim() !== 'Abc123') {
+            if (formData.name.trim() !== 'admin' || formData.password.trim() !== 'Abc123') {
                 setMessage({ type: 'error', text: '帳戶ID和密碼不符。' });
             }
             else {
                 setMessage({ type: 'success', text: '登入成功，跳轉中...' });
+
+                setUser({
+                    id: 1,
+                    name: 'admin',
+                    email: 'admin@demo.com',
+                });
                 
+                setCookie('admin_token', 'valid_token_123');
+
                 console.log('Login successful, attempting to redirect...');
     
                 setTimeout(() => {
                     console.log('Redirecting to /admin');
-                    window.location.href = '/admin';
+                    redirect('/admin');
                 }, 500);
             }
         } catch (error) {
@@ -126,10 +141,13 @@ export default function LoginPage() {
                             <div className='iweby-row'>
                                 <label className='name' htmlFor='password'>密碼 <small style={{color:'#f93a37'}}>*</small></label>
                                 <div className={`iweby-input iweby-input-password ${errors.password ? 'error' : ''}`}>
-                                    <input type='password' id='password' name='password' value={formData.password} onChange={handleChange} onKeyDown={handleKeyPress}/>
+                                    <input type={ passwordVisible? 'text' : 'password'} id='password' name='password' value={formData.password} onChange={handleChange} onKeyDown={handleKeyPress}/>
                                      {errors.password && (
                                       <small className="tips">請正確填寫此欄位。</small>
                                     )}
+                                    <button type="button" className="switch-pwd-type" onClick={() => setPasswordVisible(!passwordVisible)}>
+                                        <i className="fa fa-eye-slash hide" style={{ display: 'block' }}>$</i>
+                                        <i className="fa fa-eye show" style={{ display: 'none' }}></i></button>
                                 </div>
                             </div>
 

@@ -63,6 +63,8 @@ async function validateToken(token: string) {
             // 2. Check if token has been revoked
             // 3. Fetch user permissions
             const userData = VALID_TOKENS.get(token);
+
+            console.log(userData);
             
             if (!userData) {
                 return null; // Invalid token
@@ -73,7 +75,6 @@ async function validateToken(token: string) {
             }
             
             return userData;
-
         }
     } catch (error) {
         console.error('Token verification API call failed:', error);
@@ -84,7 +85,7 @@ async function validateToken(token: string) {
 
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    const token = request.cookies.get('token')?.value;
+    const token = request.cookies.get('admin_token')?.value;
 
     // Skip
     if (shouldSkipPath(pathname)) {
