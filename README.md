@@ -16,7 +16,7 @@ Server Actions (functions marked with 'use server') have specific rules:
 
  - Event handlers (onClick, onSubmit, etc.)
    
-  - Form actions (<form action={serverAction}>)
+  - Form actions (`<form action={serverAction}>`)
    
    - Transitions (with useTransition)
 
