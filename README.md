@@ -7,3 +7,22 @@ Tech Stack:
 - Next.js 16+
 - React
 - TypeScript (optional)
+
+
+Server Actions (functions marked with 'use server') have specific rules:
+
+✅ CAN be called from Client Components in:
+
+Event handlers (onClick, onSubmit, etc.)
+
+Form actions (<form action={serverAction}>)
+
+Transitions (with useTransition)
+
+❌ CANNOT be called from Client Components in:
+
+useEffect hooks
+
+Component lifecycle methods
+
+Async callbacks not tied to user actions
