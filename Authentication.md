@@ -59,22 +59,49 @@
 
 ### 後端驗證（API Route / Server Action）
 
+   
+
+     // /api/login/route.ts
+        import { NextResponse } from 'next/server'
+        
+        export async function POST(req: Request) {
+          const { email, password } = await req.json()
+          
+          // 模擬驗證
+          if (email === 'admin@test.com' && password === '1234') {
+            const res = NextResponse.json({ success: true })
+            res.cookies.set('admin_token', 'FAKE_TOKEN', { httpOnly: true })
+            return res
+          }
+          
+          return NextResponse.json({ success: false })
+        }
+    
+     假設你有一個遠程 API `https://auth.example.com/login`：
+    
     // /api/login/route.ts
     import { NextResponse } from 'next/server'
     
     export async function POST(req: Request) {
       const { email, password } = await req.json()
-      
-      // 模擬驗證
-      if (email === 'admin@test.com' && password === '1234') {
-        const res = NextResponse.json({ success: true })
-        res.cookies.set('admin_token', 'FAKE_TOKEN', { httpOnly: true })
-        return res
+    
+      // call 遠程 API
+      const res = await fetch('https://auth.example.com/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+    
+      const data = await res.json()
+    
+      if (data.success) {
+        const response = NextResponse.json({ success: true })
+        response.cookies.set('admin_token', data.token, { httpOnly: true })
+        return response
       }
-      
+    
       return NextResponse.json({ success: false })
     }
-
 
 ----------
 
