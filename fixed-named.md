@@ -64,32 +64,33 @@
 
 
 ## 6. 可視化樹狀結構圖
-/app
-├─ layout.tsx           # 全局 Layout (header/footer/nav)
-├─ globals.css          # 全域 CSS
-├─ head.tsx             # 全局 head metadata
-├─ middleware.ts        # 全局 / 指定路由前置處理
-├─ error.tsx            # 全局錯誤邊界
-├─ loading.tsx          # Suspense 加載指示組件
-├─ not-found.tsx        # 404 專用頁面
-├─ template.tsx         # 重新 mount Layout 專用
 
-├─ admin
-│   ├─ layout.tsx       # admin 專用 Layout
-│   ├─ page.tsx         # /admin 主頁面
-│   └─ login
-│       └─ page.tsx     # /admin/login 登入頁面
-
-├─ api
-│   ├─ login
-│   │   └─ route.ts     # /api/login (POST / GET...)
-│   ├─ users
-│   │   ├─ route.ts     # /api/users
-│   │   └─ [id]
-│   │       └─ route.ts # /api/users/:id 動態路由
-│   └─ users
-│       └─ [...slug]
-│           └─ route.ts # /api/users/* catch-all
-
-/public
-├─ favicon.ico          # 公共資源
+    /app
+    ├─ layout.tsx           # 全局 Layout (header/footer/nav)
+    ├─ globals.css          # 全域 CSS
+    ├─ head.tsx             # 全局 head metadata
+    ├─ middleware.ts        # 全局 / 指定路由前置處理
+    ├─ error.tsx            # 全局錯誤邊界
+    ├─ loading.tsx          # Suspense 加載指示組件
+    ├─ not-found.tsx        # 404 專用頁面
+    ├─ template.tsx         # 重新 mount Layout 專用
+    
+    ├─ admin
+    │   ├─ layout.tsx       # admin 專用 Layout
+    │   ├─ page.tsx         # /admin 主頁面
+    │   └─ login
+    │       └─ page.tsx     # /admin/login 登入頁面
+    
+    ├─ api
+    │   ├─ login
+    │   │   └─ route.ts     # /api/login (POST / GET...)
+    │   ├─ users
+    │   │   ├─ route.ts     # /api/users
+    │   │   └─ [id]
+    │   │       └─ route.ts # /api/users/:id 動態路由
+    │   └─ users
+    │       └─ [...slug]
+    │           └─ route.ts # /api/users/* catch-all
+    
+    /public
+    ├─ favicon.ico          # 公共資源
