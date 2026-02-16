@@ -27,3 +27,6 @@ Server Actions (functions marked with 'use server') have specific rules:
  - Component lifecycle methods
    
  - Async callbacks not tied to user actions
+
+
+ Server Action 中，不能直接返回原始類型，需要返回一個可以序列化的對象。
