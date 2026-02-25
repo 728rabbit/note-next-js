@@ -60,7 +60,7 @@ export function useAdminPageNavigator(items: AdminNavigator | { name: string; ur
     const initialized = useRef(false);
 
     useEffect(() => {
-         // 防止重複執行
+        // Prevent duplicate execution
         if (initialized.current) return;
         initialized.current = true;
         
