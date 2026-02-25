@@ -1,0 +1,104 @@
+div.page-content.authn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 16px;
+}
+
+div.page-content.authn h1 {
+    position: relative;
+    color: var(--icolor-primary);
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+div.page-content.authn div.widget {
+    max-width: 100%;
+    width: 800px;
+    padding: 40px;
+    margin: auto;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+div.page-content.authn div.widget:before {
+    position: absolute;
+    content: '';
+    top: 40px;
+    bottom: 40px;
+    left: 50%;
+    margin-left: -1px;
+    border-left: 2px dotted var(--icolor-gray);
+}
+
+div.page-content.authn div.widget > div.logo {
+    display: inline-block;
+    width: 50%;
+    padding-right: 40px;
+    vertical-align: middle;
+    text-align: center;
+    white-space: normal;
+}
+
+div.page-content.authn div.widget > div.logo > img {
+    width: 100%;
+}
+
+div.page-content.authn div.widget > div.form {
+    display: inline-block;
+    width: 50%;
+    padding-left: 40px;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+div.page-content.authn div.iweby-row input {
+    border-radius: 18px;
+}
+
+div.page-content.authn div.iweby-row button[type="button"] {
+    font-size: 1.125rem;
+    border-radius: 18px;
+}
+
+div.page-content.authn div.ip_address {
+    position: fixed;
+    background: var(--icolor-primary);
+    width: 100%;
+    color: var(--icolor-white);
+    left: 0px;
+    bottom: 0px;
+    padding: 4px;
+    font-weight: bold;
+    text-align: center;
+}
+
+div.page-content.authn a.back > i {
+    vertical-align: middle;
+}
+
+@media only screen and (max-width: 720px) {
+    div.page-content.authn div.widget {
+        padding: 20px;
+        white-space: normal;
+    }
+    
+    div.page-content.authn div.widget:before {
+        display: none;
+    }
+
+    div.page-content.authn div.widget > div.logo, 
+    div.page-content.authn div.widget > div.form {
+        width: 100%;
+        padding: 20px 0px;
+    }
+    
+    div.page-content.authn div.widget > div.logo {
+        border-bottom: 2px dotted var(--icolor-gray);
+    }
+    
+    div.page-content.authn div.widget > div.logo > img {
+        max-width: 318px;
+    }
+}
