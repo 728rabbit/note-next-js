@@ -21,12 +21,12 @@ interface RouteConfig {
 
 /**
  * Fetch route configuration from the API on the server side
- * @param debugMode - When true, returns mock data instead of calling the API
+ * @param SIMULATED_MODE  - When true, returns mock data instead of calling the API
  * @returns Route configuration object containing locale settings and page mappings
  */
-async function fetchRouteConfig(debugMode = false): Promise<RouteConfig> {
+async function fetchRouteConfig(SIMULATED_MODE  = false): Promise<RouteConfig> {
     // If debug mode is enabled, return mock data directly
-    if (debugMode) {
+    if (SIMULATED_MODE ) {
         return getDefaultConfig();
     }
 
@@ -104,6 +104,8 @@ export default async function Page({ params }: slugProps) {
             return item;
         }
     });
+
+    console.log(decodedSlug);
 
     // Fetch route configuration from the server-side API
     const { defaultLocale, supportLocale, pageMapping } = await fetchRouteConfig(true);
