@@ -251,6 +251,6 @@ export default async function Page({ params }: slugProps) {
     }
 
     // Render the component with the locale as props
-    // E.g.: export default function YourPage({ locale } : { locale: string }) { ... }
+    // E.g.: export default function Home({ locale } : { locale: string }) { ... }
     return <Component locale={locale} />;
 }
