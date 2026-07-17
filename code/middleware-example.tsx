@@ -1,4 +1,6 @@
-// Middleware (proxy.tsx) - Handles authentication, routing, and locale management
+// proxy.tsx
+
+// Middleware - Handles authentication, routing, and locale management
 // Note: Only one project can exist in the root directory
 
 import { NextResponse } from 'next/server';
