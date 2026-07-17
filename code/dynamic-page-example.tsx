@@ -10,11 +10,11 @@ interface slugProps {
 
 // Route configuration type definition
 interface RouteConfig {
-    defaultLocale: string;
-    supportLocale: string[];
+    defaultcurrentLocale: string;
+    supportcurrentLocale: string[];
     pageMapping: Array<{
         component: string;
-        locale: string;
+        currentLocale: string;
         slug: string[];
     }>;
 }
@@ -22,7 +22,7 @@ interface RouteConfig {
 /**
  * Fetch route configuration from the API on the server side
  * @param SIMULATED_MODE  - When true, returns mock data instead of calling the API
- * @returns Route configuration object containing locale settings and page mappings
+ * @returns Route configuration object containing currentLocale settings and page mappings
  */
 async function fetchRouteConfig(SIMULATED_MODE  = false): Promise<RouteConfig> {
     // If debug mode is enabled, return mock data directly
@@ -63,13 +63,13 @@ async function fetchRouteConfig(SIMULATED_MODE  = false): Promise<RouteConfig> {
  */
 function getDefaultConfig(): RouteConfig {
     return {
-        defaultLocale: "en",
-        supportLocale: ["en", "zh"],
+        defaultcurrentLocale: "en",
+        supportcurrentLocale: ["en", "zh"],
         pageMapping: [
-            { component: "Home", locale: "en", slug: [] },
-            { component: "Home", locale: "zh", slug: [] },
-            { component: "About", locale: "en", slug: ["about_us"] },
-            { component: "About", locale: "zh", slug: ["關於我們"] }
+            { component: "Home", currentLocale: "en", slug: [] },
+            { component: "Home", currentLocale: "zh", slug: [] },
+            { component: "About", currentLocale: "en", slug: ["about_us"] },
+            { component: "About", currentLocale: "zh", slug: ["關於我們"] }
         ]
     };
 }
@@ -89,7 +89,7 @@ export const registry: Record<string, React.ComponentType<any>> = {
  * - /zh → Home component (Chinese)
  * - /en/about_us → About component (English)
  * - /zh/關於我們 → About component (Chinese)
- * - / → Defaults to English locale
+ * - / → Defaults to English currentLocale
  * - /fr → Falls back to English (404 if route doesn't exist)
  */
 export default async function Page({ params }: slugProps) {
@@ -108,27 +108,27 @@ export default async function Page({ params }: slugProps) {
     console.log(decodedSlug);
 
     // Fetch route configuration from the server-side API
-    const { defaultLocale, supportLocale, pageMapping } = await fetchRouteConfig(true);
+    const { defaultcurrentLocale, supportcurrentLocale, pageMapping } = await fetchRouteConfig(true);
 
     // Initialize with defaults
-    let locale: string = defaultLocale;
-    let paths: string[] = [];
+    let currentLocale: string = defaultcurrentLocale;
+    let currentPaths: string[] = [];
 
-    // Check if the first URL segment is a supported locale
-    // If yes, use it as the locale and treat the rest as the path
-    // If no, use the default locale and treat all segments as the path
-    if (decodedSlug.length > 0 && supportLocale.includes(decodedSlug[0])) {
-        [locale, ...paths] = decodedSlug;
+    // Check if the first URL segment is a supported currentLocale
+    // If yes, use it as the currentLocale and treat the rest as the path
+    // If no, use the default currentLocale and treat all segments as the path
+    if (decodedSlug.length > 0 && supportcurrentLocale.includes(decodedSlug[0])) {
+        [currentLocale, ...currentPaths] = decodedSlug;
     } else {
-        // When no locale is found, treat all segments as the path
+        // When no currentLocale is found, treat all segments as the path
         // This will likely result in a 404 unless the path matches a route
-        paths = decodedSlug;
+        currentPaths = decodedSlug;
     }
 
-    // Find the matching route configuration based on locale and path segments
+    // Find the matching route configuration based on currentLocale and path segments
     const currentRoute = pageMapping.find(page => {
-        return page.locale === locale && 
-               JSON.stringify(page.slug) === JSON.stringify(paths);
+        return page.currentLocale === currentLocale && 
+               JSON.stringify(page.slug) === JSON.stringify(currentPaths);
     });
 
     // If no matching route is found, return a 404 page
@@ -141,7 +141,8 @@ export default async function Page({ params }: slugProps) {
     if (!Component) {
         notFound();
     }
-
+    
     // Render the component with the route configuration as props
-    return <Component page={currentRoute} />;
+    // E.g.: export default function YourPage({ currentLocale } : { currentLocale: string }) { ... }
+    return <Component page={currentRoute} locale={currentLocale} />;
 }
