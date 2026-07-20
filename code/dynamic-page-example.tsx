@@ -1,9 +1,9 @@
 // app/[...slug]/page.tsx
 
-import Home from "../components/Home";
-import About from "../components/About";
-import { notFound } from "next/navigation";
-import { Metadata } from "next";
+import Home from '../template/Home';
+import About from '../template/About';
+import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
 interface slugProps {
     params: { slug: string[] };
@@ -59,13 +59,13 @@ async function fetchRouteConfig(SIMULATED_MODE = false): Promise<RouteConfig> {
  */
 function defaultRouteConfig(): RouteConfig {
     return {
-        defaultLocale: "en",
-        supportLocale: ["en", "zh"],
+        defaultLocale: 'en',
+        supportLocale: ['en', 'zh'],
         pageMapping: [
-            { component: "Home", locale: "en", slug: [] },
-            { component: "Home", locale: "zh", slug: [] },
-            { component: "About", locale: "en", slug: ["about_us"] },
-            { component: "About", locale: "zh", slug: ["關於我們"] }
+            { component: 'Home', locale: 'en', slug: [] },
+            { component: 'Home', locale: 'zh', slug: [] },
+            { component: 'About', locale: 'en', slug: ['about_us'] },
+            { component: 'About', locale: 'zh', slug: ['關於我們'] }
         ]
     };
 }
@@ -80,30 +80,30 @@ export const registry: Record<string, React.ComponentType<any>> = {
 const pageMetadataMap = {
     Home: {
         en: {
-            title: "Home",
-            description: "Welcome to our website",
-            ogTitle: "Home - My Next App",
-            ogDescription: "Welcome to our website",
+            title: 'Home',
+            description: 'Welcome to our website',
+            ogTitle: 'Home - My Next App',
+            ogDescription: 'Welcome to our website',
         },
         zh: {
-            title: "首頁",
-            description: "歡迎來到我們的網站",
-            ogTitle: "首頁 - My Next App",
-            ogDescription: "歡迎來到我們的網站",
+            title: '首頁',
+            description: '歡迎來到我們的網站',
+            ogTitle: '首頁 - My Next App',
+            ogDescription: '歡迎來到我們的網站',
         },
     },
     About: {
         en: {
-            title: "About Us",
-            description: "Learn more about our company",
-            ogTitle: "About Us - My Next App",
-            ogDescription: "Learn more about our company",
+            title: 'About Us',
+            description: 'Learn more about our company',
+            ogTitle: 'About Us - My Next App',
+            ogDescription: 'Learn more about our company',
         },
         zh: {
-            title: "關於我們",
-            description: "這是關於頁面",
-            ogTitle: "關於我們 - My Next App",
-            ogDescription: "分享關於我們的資訊",
+            title: '關於我們',
+            description: '這是關於頁面',
+            ogTitle: '關於我們 - My Next App',
+            ogDescription: '分享關於我們的資訊',
         },
     },
 } as const;
@@ -202,22 +202,22 @@ export async function generateMetadata({ params }: slugProps): Promise<Metadata>
             url: fullUrl,
             images: [
                 {
-                    url: "/og-image.png",
+                    url: '/og-image.png',
                     width: 1200,
                     height: 630,
                     alt: metadataForLocale.title,
                 },
             ],
             locale: locale === 'zh' ? 'zh_Hant' : 'en_US',
-            type: "website",
+            type: 'website',
         },
-        alternates: {
+        /*alternates: {
             // Multi-language SEO with hreflang tags
             languages: {
                 'en': `${baseUrl}/en${currentRoute.slug.length ? '/' + currentRoute.slug.join('/') : ''}`,
                 'zh': `${baseUrl}/zh${currentRoute.slug.length ? '/' + currentRoute.slug.join('/') : ''}`,
             },
-        },
+        },*/
         /*keywords: locale === 'zh' 
             ? ['網站', '應用程式', '首頁'] 
             : ['website', 'app', 'home'],*/
