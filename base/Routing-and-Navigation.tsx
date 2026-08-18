@@ -30,7 +30,7 @@ interface PageProps {
  * @example
  * Visiting /blog/nextjs-tutorial will have slug = "nextjs-tutorial"
  */
-export default async function BlogDetailPage({ params }: PageProps) {
+export default async function DetailsPage({ params }: PageProps) {
   // Await the Promise to resolve and get the actual route parameters
   // Note: Must use `await`, otherwise it will throw an error
   const { slug } = await params
