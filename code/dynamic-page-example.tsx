@@ -64,6 +64,8 @@ function defaultRouteConfig(): RouteConfig {
         pageMapping: [
             { component: 'Home', locale: 'en', slug: [] },
             { component: 'Home', locale: 'zh', slug: [] },
+            { component: 'Home', locale: 'en', slug: ['home']},
+            { component: 'Home', locale: 'zh', slug: ['首頁'] },
             { component: 'About', locale: 'en', slug: ['about_us'] },
             { component: 'About', locale: 'zh', slug: ['關於我們'] }
         ]
@@ -117,10 +119,11 @@ const pageMetadataMap = {
  */
 async function getRouteData(params: { slug: string[] }, simulatedMode = true) {
     // Extract and decode URL parameters
-    const { slug = [] } = await params;
+    const { slug = [] } = params;
     
     // Decode URL-encoded characters (e.g., %20 -> space)
     const decodedSlug = slug.map(item => {
+        item = item.toLowerCase();
         try {
             return decodeURIComponent(item);
         } catch {
@@ -235,6 +238,8 @@ export async function generateMetadata({ params }: slugProps): Promise<Metadata>
  * URL patterns:
  * - /en → Home component (English)
  * - /zh → Home component (Chinese)
+ * - /en/home → Home component (English)
+ * - /zh/首頁 → Home component (Chinese)
  * - /en/about_us → About component (English)
  * - /zh/關於我們 → About component (Chinese)
  * - / → Defaults to English locale
