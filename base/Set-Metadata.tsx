@@ -1,3 +1,10 @@
+export const metadata: Metadata = {
+  title: 'Next.js 16',
+  description: '一个用于学习 Next.js 16 的最小实战项目骨架。',
+}
+
+OR
+
 /**
  * Dynamically generates metadata based on URL parameters
  * This runs on the server and is critical for SEO
