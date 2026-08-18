@@ -1,0 +1,68 @@
+/**
+ * Dynamically generates metadata based on URL parameters
+ * This runs on the server and is critical for SEO
+ * @param params - URL slug parameters from the catch-all route
+ * @returns Metadata object for the current page
+ */
+
+interface slugProps {
+    params: { slug: string[] };
+}
+
+export async function generateMetadata({ params }: slugProps): Promise<Metadata> {
+    // Use shared function to get route data
+    const { locale, currentRoute, decodedSlug } = await getRouteData(params, true);
+
+    // Get component-specific metadata
+    const componentName = currentRoute.component as keyof typeof pageMetadataMap;
+    const metadataForComponent = pageMetadataMap[componentName];
+    const metadataForLocale = metadataForComponent?.[locale as keyof typeof metadataForComponent];
+
+    // Fallback metadata if specific entry doesn't exist
+    if (!metadataForLocale) {
+        return {
+            title: locale === 'zh' ? '頁面' : 'Page',
+            description: locale === 'zh' ? '頁面內容' : 'Page content',
+        };
+    }
+
+    // Build full URL for canonical and Open Graph
+    const urlPath = decodedSlug.join('/');
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://example.com';
+    const fullUrl = `${baseUrl}/${urlPath}`;
+
+    // Return complete metadata for SEO
+    return {
+        title: metadataForLocale.title,
+        description: metadataForLocale.description,
+        openGraph: {
+            title: metadataForLocale.ogTitle,
+            description: metadataForLocale.ogDescription,
+            url: fullUrl,
+            images: [
+                {
+                    url: '/og-image.png',
+                    width: 1200,
+                    height: 630,
+                    alt: metadataForLocale.title,
+                },
+            ],
+            locale: locale === 'zh' ? 'zh_Hant' : 'en_US',
+            type: 'website',
+        },
+        /*alternates: {
+            // Multi-language SEO with hreflang tags
+            languages: {
+                'en': `${baseUrl}/en${currentRoute.slug.length ? '/' + currentRoute.slug.join('/') : ''}`,
+                'zh': `${baseUrl}/zh${currentRoute.slug.length ? '/' + currentRoute.slug.join('/') : ''}`,
+            },
+        },*/
+        /*keywords: locale === 'zh' 
+            ? ['網站', '應用程式', '首頁'] 
+            : ['website', 'app', 'home'],*/
+        robots: {
+            index: true,
+            follow: true,
+        },
+    };
+}
