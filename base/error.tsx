@@ -4,6 +4,7 @@
 // Automatically rendered by Next.js when a page throws an error
 // Must be a Client Component (uses 'use client')
 // Props: error - the error object, reset - function to retry
+// E.g.: throw new Error('這是一個測試錯誤！');
 // ============================================================
 'use client';
 
