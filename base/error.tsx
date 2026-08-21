@@ -5,7 +5,6 @@
 // Must be a Client Component (uses 'use client')
 // Props: error - the error object, reset - function to retry
 // ============================================================
-
 'use client';
 
 import {useEffect} from 'react';
