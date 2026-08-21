@@ -3,6 +3,7 @@
 // Loading Component - Full Screen Spinner
 // Used by Next.js Suspense boundary during page transitions
 // Automatically shows when page.tsx is loading (async data fetch)
+// E.g.: await new Promise((resolve) => setTimeout(resolve, 5000));
 // ============================================================
 export default function defaultLoading() {
     return (
