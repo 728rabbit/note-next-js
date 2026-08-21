@@ -74,3 +74,6 @@ Server Actions (functions marked with 'use server') have specific rules:
     ├── next.config.js          # Next.js 配置文件
     └── package.json            # 项目依赖和脚本
 
+** 模擬延遲
+
+await new Promise((resolve) => setTimeout(resolve, 5000));
