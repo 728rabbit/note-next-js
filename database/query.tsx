@@ -26,3 +26,10 @@ export async function getUserList() {
 
     return listData;
 }
+
+export async function getPageList(tableName: string = 'app_user') {
+     return await db
+        .selectFrom(tableName  as any)
+        .selectAll()
+        .execute();
+}

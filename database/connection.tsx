@@ -7,7 +7,7 @@ const globalForKysely = globalThis as unknown as { db: Kysely<Database> };
 
 export const db =
     globalForKysely.db ||
-    new Kysely<Database>({
+    new Kysely<Database | any>({
         dialect: new MysqlDialect({
             pool: createPool({
                 host: process.env.DATABASE_HOST || '127.0.0.1',
