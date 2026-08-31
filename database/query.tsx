@@ -1,3 +1,19 @@
+/*
+import { getUserList } from "./database/query";
+
+export default async function () {
+   const users = await getUserList();
+   ...
+
+   return (
+        <ul>
+        {users.map(user => (
+            <li key={user.id}>{user.display_name} ({user.email})</li>
+        ))}
+        </ul>
+    );
+}
+*/
 import { db } from "./connection";
 
 export async function getUserList() {
