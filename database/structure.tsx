@@ -22,5 +22,6 @@ interface AppUserTable {
 }
 
 export interface Database {
-    app_user: AppUserTable
+    app_user: AppUserTable,
+    // articles: ArticleTable; (If there are other data tables, follow the same pattern)
 }
