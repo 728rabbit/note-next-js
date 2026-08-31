@@ -1,6 +1,6 @@
 import { Generated } from "kysely";
 
-interface AppUserTable {
+ interface AppUserTable {
     id: Generated<number>;       // int(11) AUTO_INCREMENT (主鍵自動生成)
     role_id: number;             // int(11)
     root_user: number;           // tinyint(4)

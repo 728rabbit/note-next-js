@@ -27,9 +27,15 @@ export async function getUserList() {
     return listData;
 }
 
-export async function getPageList(tableName: string = 'app_user') {
-     return await ddb
-        .selectFrom(tableName  as any)
-        .selectAll()
-        .execute();
+export async function getList<T = any>(tableName: string = 'app_user', columns?: string[]): Promise<T[]> {
+    let query = ddb.selectFrom(tableName as any);
+
+    if (columns && columns.length > 0) {
+        query = query.select(columns.map(col => ddb.dynamic.ref(col)));
+    }
+    else {
+        query = query.selectAll();
+    }
+
+     return await query.execute() as T[];
 }
