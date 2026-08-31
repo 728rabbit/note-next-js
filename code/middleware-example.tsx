@@ -200,11 +200,9 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     
     // Case 1: Single locale supported → rewrite internally
     if (SUPPORTED_LOCALES.length === 1) {
-        const singleLocale = SUPPORTED_LOCALES[0];
-        
         if (!hasValidLocalePrefix(pathname)) {
             // Rewrite to include locale for internal routing (preserves URL)
-            const internalPath = `/${singleLocale}${pathname}`;
+            const internalPath = `${pathname}`;
             return NextResponse.rewrite(new URL(internalPath, request.url));
         }
     } 
