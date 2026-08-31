@@ -1,4 +1,4 @@
-1. Install the kit
+# 1. Install the kit
 
 ## Using npm
 
@@ -13,6 +13,6 @@ yarn add kysely mysql2
 pnpm add kysely mysql2
 
 
-2. Setting TypeScript types and connections
+# 2. Setting TypeScript types and connections
 
 ## structure.tsx -> connection.tsx -> query.tsx
