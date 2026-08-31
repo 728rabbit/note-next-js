@@ -22,4 +22,7 @@ export const db =
         })
     });
 
+export const ddb = db as Kysely<any>;
+
 if (process.env.NODE_ENV !== 'production') { globalForKysely.db = db; }
+

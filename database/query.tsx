@@ -14,7 +14,7 @@ export default async function () {
     );
 }
 */
-import { db } from "./connection";
+import { db, ddb } from "./connection";
 
 export async function getUserList() {
     const listData = await db
@@ -28,7 +28,7 @@ export async function getUserList() {
 }
 
 export async function getPageList(tableName: string = 'app_user') {
-     return await db
+     return await ddb
         .selectFrom(tableName  as any)
         .selectAll()
         .execute();
