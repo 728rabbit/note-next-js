@@ -338,3 +338,48 @@ export async function updateOne<T = any>(
         throw error;
     }
 }
+
+
+/**
+ * Perform an upsert operation (insert or update based on existence)
+ * 
+ * Attempts to update first, then falls back to insert if no records exist.
+ * If a duplicate key error occurs during insert, the operation is complete
+ * (the record was already inserted by another request).
+ * 
+ * @param tableName - The database table name
+ * @param data - The data to insert or update
+ * @param options - Save options containing filter conditions
+ * @returns The ID of the inserted/updated record, or `null` if no ID was returned
+ * 
+ * @throws Will throw an error if the database operation fails
+ * 
+ * @example
+ * ```ts
+ * const id = await doSave('users', 
+ *   { email: 'john@example.com', name: 'John Updated' },
+ *   { filters: [['email', '=', 'john@example.com']] }
+ * );
+ * ```
+ */
+export async function doSave<T = any>(
+    tableName: string,
+    data: T,
+    options: SaveOptions<T>
+): Promise<number | string | null> {
+    try {
+        // Try to update existing records
+        const updateResult = await updateOne(tableName, data, options);
+        
+        // If update affected at least one record, return the ID
+        if (updateResult !== null) {
+            return updateResult;
+        }
+        
+        // No records were updated, so insert a new record
+        return await insertOne(tableName, data);
+    } catch (error) {
+        console.error(`Failed to save ${tableName}:`, error);
+        throw error;
+    }
+}
