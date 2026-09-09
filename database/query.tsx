@@ -14,7 +14,7 @@ export default async function () {
     );
 }
 */
-import { db, ddb } from "./connection";
+import { db, ddb } from "./kyselydb";
 
 export async function getUserList() {
     const listData = await db
@@ -37,5 +37,5 @@ export async function getList<T = any>(tableName: string = 'app_user', columns?:
         query = query.selectAll();
     }
 
-     return await query.execute() as T[];
+    return await query.execute() as T[];
 }
