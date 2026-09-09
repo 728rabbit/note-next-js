@@ -1,4 +1,3 @@
-
 # 1. Install the kit
 
     npm install kysely mysql2
@@ -11,8 +10,6 @@
 
     pnpm add kysely mysql2
 
-  
-  
 
 # 2. Setting TypeScript types and connections
 
@@ -28,8 +25,7 @@
 	    email: string;
     }
     
-      
-    
+
     export default async function Page() {
 	    const result = await getList('app_user', {
 		    fields: ['id', 'display_name', 'email'],
@@ -55,4 +51,3 @@
 		    </div>
 	    );
     }
-		
