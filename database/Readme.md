@@ -29,7 +29,8 @@
     export default async function Page() {
 	    const result = await getList('app_user', {
 		    fields: ['id', 'display_name', 'email'],
-		    pagination: { page: 1, limit: 15 }
+		    pagination: { page: 1, limit: 15 },
+            orderBy: { column: 'id', direction: 'desc' }
 	    }) as any;
 
 	    return (

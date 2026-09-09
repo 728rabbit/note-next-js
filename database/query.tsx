@@ -1,6 +1,6 @@
 import { ddb } from "./kyselydb";
 
-// Dynamically get List Data
+// Get List Data
 export interface GetListOptions<T = any> {
     fields?: (keyof T)[] | string[];
     filters?: [string, string, any][] | ((qb: any) => any);
@@ -14,6 +14,7 @@ export interface GetListOptions<T = any> {
         offset?: number;
     };
     distinct?: boolean;
+    firstOnly?: boolean;
 }
 
 export interface PaginatedResult<T> {
@@ -26,16 +27,28 @@ export interface PaginatedResult<T> {
     hasPrev: boolean;
 }
 
+export async function getOne<T = any>(
+    tableName: string,
+    options: GetListOptions<T> = {}
+): Promise<T | null> {
+    const result = await getList<T>(tableName, {
+        ...options,
+        firstOnly: true
+    });
+    return result as T | null;
+}
+
 export async function getList<T = any>(
     tableName: string,
     options: GetListOptions<T> = {}
-): Promise<T[] | PaginatedResult<T>> {
+): Promise<T[] | PaginatedResult<T> | T | null> {
     const {
         fields,
         filters,
         orderBy,
         pagination,
         distinct = false,
+        firstOnly = false
     } = options;
 
     // Build the query
@@ -73,6 +86,12 @@ export async function getList<T = any>(
         orderArray.forEach(({ column, direction = 'asc' }) => {
             query = query.orderBy(column, direction);
         });
+    }
+
+    // Return only the first record.
+    if (firstOnly) {
+        const result = await query.limit(1).execute() as T[];
+        return result.length > 0 ? result[0] : null;
     }
 
     // Handle PAGINATION
@@ -126,3 +145,5 @@ export async function getList<T = any>(
     // Execute query without pagination
     return await query.execute() as T[];
 }
+
+
