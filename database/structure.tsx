@@ -1,6 +1,6 @@
 import { Generated } from "kysely";
 
- interface AppUserTable {
+interface AppUserTable {
     id: Generated<number>;       // int(11) AUTO_INCREMENT (主鍵自動生成)
     role_id: number;             // int(11)
     root_user: number;           // tinyint(4)
@@ -24,4 +24,25 @@ import { Generated } from "kysely";
 export interface Database {
     app_user: AppUserTable,
     // articles: ArticleTable; (If there are other data tables, follow the same pattern)
+}
+
+/**
+ * Paginated response structure
+ * @template T - The record type
+ */
+export interface PaginatedResult<T> {
+    /** Array of records for the current page. */
+    data: T[];
+    /** Total number of records matching the query. */
+    total: number;
+    /** Current page number (1-indexed). */
+    page: number;
+    /** Number of records per page. */
+    limit: number;
+    /** Total number of pages available. */
+    totalPages: number;
+    /** Whether there is a next page. */
+    hasNext: boolean;
+    /** Whether there is a previous page. */
+    hasPrev: boolean;
 }

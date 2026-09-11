@@ -13,7 +13,7 @@
 
 # 2. Setting TypeScript types and connections
 
-    structure.tsx -> connection.tsx -> query.tsx
+    structure.tsx -> kyselydb.tsx -> query.tsx
 
 # 3. Get List Data
   
@@ -25,7 +25,6 @@
 	    email: string;
     }
     
-
     export default async function Page() {
 	    const result = await getList('app_user', {
 		    fields: ['id', 'display_name', 'email'],
