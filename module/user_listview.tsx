@@ -9,6 +9,7 @@ export default async function Page() {
 */
 'use client';
 
+import { useFormStatus } from "react-dom";
 import { PaginatedResult } from "../database/structure";
 import { addNewUser, deleteUser } from "./user_actions";
 
@@ -19,6 +20,8 @@ interface User {
 }
 
 export default function UserListView({ result }: { result: PaginatedResult<User> }) {
+    const { pending } = useFormStatus();
+
     return (
         <div>
           <h1>User List</h1>
@@ -32,7 +35,9 @@ export default function UserListView({ result }: { result: PaginatedResult<User>
             ))}
           </ul>
             <form action={addNewUser}>
-                <button type="submit">新增用戶</button>
+                <input type="text" name="display_name" placeholder="Display Name" required />
+                <input type="text" name="email" placeholder="Email" required />
+                <button type="submit" disabled={pending}> {pending ? 'Adding...' : 'Add User'}</button>
             </form>
         </div>
       );

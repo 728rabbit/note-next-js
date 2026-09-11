@@ -19,13 +19,15 @@ export async function getUserList() : Promise<PaginatedResult<User>> {
   })) as PaginatedResult<User>;
 }
 
-export async function addNewUser() {
-  const randomEmail = Math.random() + '@example.com';
-  await doSave('app_user',
-    { email: randomEmail, display_name: 'John Updated' },
-    { filters: [['email', '=', randomEmail]] }
-  );
-  revalidatePath('/');
+export async function addNewUser(formData: FormData) {
+    const display_name = String(formData.get("display_name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    if (!display_name || !email) throw new Error("Missing fields");
+    await doSave('app_user',
+      { email: email, display_name: display_name },
+      { filters: [['email', '=', email]] }
+    );
+    revalidatePath('/');
 }
 
 export async function deleteUser(id : number) {
